@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-filename-extension */
+/* Create React Apt requires this file to be named index.js */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
