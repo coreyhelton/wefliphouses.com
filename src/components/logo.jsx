@@ -2,7 +2,7 @@ import React from 'react';
 import { GiFamilyHouse } from 'react-icons/gi';
 import styled from 'styled-components';
 
-const Logo = function logo() {
+const Logo = () => {
   return (
     <Style>
       <GiFamilyHouse />

@@ -6,7 +6,7 @@ import Menu from './Menu';
 import colors from './colors';
 import Logo from './logo';
 
-const Header = function header() {
+const Header = () => {
   const iconColor = useMemo(() => ({ color: '#fefefe' }));
 
   return (

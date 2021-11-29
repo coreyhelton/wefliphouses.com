@@ -5,7 +5,7 @@ import { IoMenu, IoClose } from 'react-icons/io5';
 import MenuItems from './MenuItems';
 import colors from './colors';
 
-const Menu = function Menu() {
+const Menu = () => {
   const [menu, setMenu] = useState(false);
   const toggleMenu = () => setMenu(!menu);
   const iconColor = useMemo(() => ({ color: '#fff' }));
