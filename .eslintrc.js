@@ -29,7 +29,7 @@ module.exports = {
     'spaced-comment': [
       'error',
       'always',
-      { markers: ['//', '?', '*', 'TODO:'] },
+      { markers: ['//', '?', '*', 'TODO'] },
     ],
   },
 };
