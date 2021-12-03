@@ -1,14 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '../Button';
 import HighlightBox from '../HighlightBox';
 import ContactForm from './ContactForm';
 
 const Contact = () => {
-  const handleClick = () => {
-    console.log('hi');
-  };
-
   return (
     <Container>
       <h1>Do you want to sell a house fast?</h1>
@@ -21,12 +16,6 @@ const Contact = () => {
       </p>
       <HighlightBox text="We Buy Houses! No fees. No Obligations. No Repairs. No Agents. No Hassles." />
       <ContactForm />
-      <Button
-        className="btn"
-        type="submit"
-        click={handleClick}
-        label="Get An Offer Now!"
-      />
     </Container>
   );
 };
