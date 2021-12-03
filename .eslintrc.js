@@ -26,6 +26,10 @@ module.exports = {
         unnamedComponents: 'arrow-function',
       },
     ],
-    'spaced-comment': 'never',
+    'spaced-comment': [
+      'error',
+      'always',
+      { markers: ['//', '?', '*', 'TODO:'] },
+    ],
   },
 };
