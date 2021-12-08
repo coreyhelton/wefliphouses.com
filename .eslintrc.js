@@ -31,5 +31,6 @@ module.exports = {
       'always',
       { markers: ['//', '?', '*', 'TODO'] },
     ],
+    'no-unused-vars': 'warn',
   },
 };

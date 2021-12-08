@@ -1,84 +1,90 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-// eslint-disable-next-line no-unused-vars
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { Form, Button } from 'semantic-ui-react';
 import AutoComplete from './AutoComplete';
 
 const ContactForm = () => {
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      address: '',
+    },
+  });
 
   const onSubmit = (data) => {
     console.log(data);
+    console.log('hi');
   };
-
-  const rawAddressInput = watch('address');
-  // useEffect(() => {
-
-  // }, [rawAddressInput]);
 
   return (
     <Container>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <h3>Your Contact Information</h3>
-        <Form.Field>
-          <label>First Name</label>
-          <input
-            placeholder="First Name"
-            type="text"
-            {...register('firstName', {
-              required: true,
-              maxLength: 15,
-              minLength: 2,
-            })}
-          />
-          {errors.firstName && <p>Please check the first name</p>}
-        </Form.Field>
-        <Form.Field>
-          <label>Last Name</label>
-          <input
-            placeholder="Last Name"
-            type="text"
-            {...register('lastName', {
-              required: true,
-              maxLength: 15,
-              minLength: 2,
-            })}
-          />
-          {errors.lastName && <p>Please check the last name</p>}
-        </Form.Field>
-        <Form.Field>
-          <label>Email</label>
-          <input
-            placeholder="Email"
-            type="email"
-            {...register('email', {
-              required: true,
-              pattern:
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-            })}
-          />
-          {errors.email && <p>Please enter a valid email address.</p>}
-        </Form.Field>
+
+        {/* FIRST NAME */}
+        <Form.Input
+          label="First Name"
+          type="text"
+          placeholder="First Name"
+          {...register('firstName', {
+            required: true,
+            maxLength: 15,
+            minLength: 2,
+          })}
+        />
+        {errors.firstName && <p>Please check the first name</p>}
+
+        {/* LAST NAME */}
+        <Form.Input
+          label="Last Name"
+          type="text"
+          placeholder="Last Name"
+          {...register('lastName', {
+            required: true,
+            maxLength: 15,
+            minLength: 2,
+          })}
+        />
+
+        {/* EMAIL */}
+        <Form.Input
+          label="Email"
+          type="email"
+          placeholder="Email"
+          {...register('email', {
+            required: true,
+            pattern:
+              /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          })}
+        />
+
         <h3>About Your Property</h3>
+        {/* ADDRESS FIELD 1 */}
         <Form.Field>
-          <label>Address</label>
-          <input
-            placeholder="Address"
-            type="text"
-            {...register('address', {
-              required: true,
-            })}
+          <Controller
+            name="address"
+            control={control}
+            render={({ field }) => (
+              <AutoComplete
+                {...field}
+                label="Address"
+                type="text"
+                placeholder="Address"
+                fluid
+              />
+            )}
           />
-          <AutoComplete rawAddressInput={rawAddressInput} />
-          {errors.email && <p>Please enter a valid address.</p>}
         </Form.Field>
         <Button type="submit">Submit</Button>
       </Form>
@@ -95,4 +101,3 @@ export default ContactForm;
 
 // TODO finish up this contact form --> https://www.freecodecamp.org/news/add-form-validation-in-react-app-with-react-hook-form/
 // TODO fix A11y issues with form
-// TODO create component to display autocomplete address, should take in object and generate elements forEach...
