@@ -1,10 +1,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Form, Button } from 'semantic-ui-react';
-import AutoComplete from './AutoComplete';
+import { Form, Button, Search, Label } from 'semantic-ui-react';
+import styled from '@emotion/styled';
+import axios from 'axios';
+
+const resultRenderer = ({ text }) => {
+  return <Label content={text} />;
+};
 
 const ContactForm = () => {
   const {
@@ -12,19 +16,64 @@ const ContactForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm({
     defaultValues: {
       firstName: '',
       lastName: '',
       email: '',
       address: '',
+      city: '',
+      state: '',
+      zipcode: '',
     },
   });
 
+  // setup for address autocomplete
+  const [addresses, setAddresses] = useState([]);
+  const apiKey = '56c4b6aede434605a66e85df333ee4fd';
+  const fetchAddresses = async (input) => {
+    const res = await axios.get(
+      `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(
+        input
+      )}&limit=5&apiKey=${apiKey}&filter=countrycode:us&format=json`
+    );
+    const addyArray = res.data.results;
+    console.log(addyArray);
+    setAddresses(
+      addyArray.map((feature) => {
+        return feature.formatted;
+      })
+    );
+  };
+  const [rawInput, setRawInput] = useState('');
+  const handleSearchChange = (options, data) => {
+    setRawInput(data.value);
+  };
+  useEffect(() => {
+    if (rawInput !== '') {
+      fetchAddresses(rawInput);
+      setAddresses([]); // ? Should this stay here or move above fetchAddresses()?
+    } else {
+      setAddresses([]);
+    }
+  }, [rawInput]);
+  const [results, setResults] = useState([]);
+  useEffect(() => {
+    setResults(
+      addresses.map((address, index) => {
+        const line = { key: index, text: address };
+        return line;
+      })
+    );
+  }, [addresses]);
+
+  const handleResultSelect = (e, data) => {
+    setRawInput(data.result.text);
+  };
+
   const onSubmit = (data) => {
     console.log(data);
-    console.log('hi');
+    console.log('form submitted...');
   };
 
   return (
@@ -40,10 +89,9 @@ const ContactForm = () => {
           {...register('firstName', {
             required: true,
             maxLength: 15,
-            minLength: 2,
+            minLength: 1,
           })}
         />
-        {errors.firstName && <p>Please check the first name</p>}
 
         {/* LAST NAME */}
         <Form.Input
@@ -68,24 +116,63 @@ const ContactForm = () => {
               /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
           })}
         />
+        {/* PHONE NUMBER */}
+        <Form.Input
+          label="Phone Number"
+          type="tel"
+          {...register('tel', {
+            required: true,
+          })}
+        />
 
         <h3>About Your Property</h3>
-        {/* ADDRESS FIELD 1 */}
+        {/* ADDRESS LINE 1 */}
+
         <Form.Field>
-          <Controller
-            name="address"
-            control={control}
-            render={({ field }) => (
-              <AutoComplete
-                {...field}
-                label="Address"
-                type="text"
-                placeholder="Address"
-                fluid
-              />
-            )}
+          <Search
+            {...register('address', {
+              required: true,
+            })}
+            onSearchChange={handleSearchChange}
+            results={results}
+            value={rawInput}
+            minCharacters={3}
+            resultRenderer={resultRenderer}
+            onResultSelect={handleResultSelect}
+            label="Address"
+            type="text"
+            placeholder="Address"
+            fluid
           />
         </Form.Field>
+        {/* CITY */}
+        <Form.Input
+          label="city"
+          type="text"
+          placeholder="city"
+          {...register('city', {
+            required: true,
+          })}
+        />
+        {/* STATE */}
+        <Form.Input
+          label="State"
+          type="text"
+          placeholder="State"
+          {...register('state', {
+            required: true,
+          })}
+        />
+        {/* ZIP CODE */}
+        <Form.Input
+          label="Zip Code"
+          type="number"
+          placeholder="Zip Code"
+          {...register('zipcode', {
+            required: true,
+            pattern: /^\d{5}(?:[-\s]\d{4})?$/,
+          })}
+        />
         <Button type="submit">Submit</Button>
       </Form>
     </Container>
