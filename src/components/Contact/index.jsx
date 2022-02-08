@@ -118,7 +118,6 @@ const index = () => {
     ApiClient.post('/form', data);
   };
   const onSubmit = (data) => {
-    // console.log(data);
     sendFormData(data);
   };
 
