@@ -114,8 +114,8 @@ const index = () => {
   });
 
   // POST form data to express-mailman
-  const sendFormData = (data) => {
-    ApiClient.post('/form', data);
+  const sendFormData = () => {
+    return null;
   };
   const onSubmit = (data) => {
     sendFormData(data);
@@ -131,7 +131,7 @@ const index = () => {
           margin: '30px',
         }}
       >
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} netlify>
           <Box
             sx={{
               display: 'flex',
