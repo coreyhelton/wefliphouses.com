@@ -1,7 +1,8 @@
 import React from 'react';
+import Lander from '../components/Lander';
 
 const Home = () => {
-  return <div>HOME!!</div>;
+  return <Lander />;
 };
 
 export default Home;

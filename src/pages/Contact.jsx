@@ -1,7 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
-import HighlightBox from '../HighlightBox';
-import ContactForm from './ContactForm';
+import styled from '@emotion/styled';
+import HighlightBox from '../components/HighlightBox';
+import ContactForm from '../components/Contact';
 
 const Contact = () => {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import { GiFamilyHouse } from 'react-icons/gi';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 const Logo = () => {
   return (

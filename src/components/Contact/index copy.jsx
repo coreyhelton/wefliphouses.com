@@ -2,12 +2,14 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Form, Button, Search, Label } from 'semantic-ui-react';
+// import { Form, Button, Search, Label } from 'semantic-ui-react';
 import styled from '@emotion/styled';
 import axios from 'axios';
+import { Input, Button, Autocomplete, TextField } from '@mui/material';
+import { IoArrowForward } from 'react-icons/io5';
 
 const resultRenderer = ({ text }) => {
-  return <Label content={text} />;
+  return <p>{text}</p>;
 };
 
 const ContactForm = () => {
@@ -78,11 +80,11 @@ const ContactForm = () => {
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <h3>Your Contact Information</h3>
 
         {/* FIRST NAME */}
-        <Form.Input
+        <Input
           label="First Name"
           type="text"
           placeholder="First Name"
@@ -94,7 +96,7 @@ const ContactForm = () => {
         />
 
         {/* LAST NAME */}
-        <Form.Input
+        <Input
           label="Last Name"
           type="text"
           placeholder="Last Name"
@@ -106,7 +108,7 @@ const ContactForm = () => {
         />
 
         {/* EMAIL */}
-        <Form.Input
+        <Input
           label="Email"
           type="email"
           placeholder="Email"
@@ -117,7 +119,7 @@ const ContactForm = () => {
           })}
         />
         {/* PHONE NUMBER */}
-        <Form.Input
+        <Input
           label="Phone Number"
           type="tel"
           {...register('tel', {
@@ -128,25 +130,23 @@ const ContactForm = () => {
         <h3>About Your Property</h3>
         {/* ADDRESS LINE 1 */}
 
-        <Form.Field>
-          <Search
-            {...register('address', {
-              required: true,
-            })}
-            onSearchChange={handleSearchChange}
-            results={results}
-            value={rawInput}
-            minCharacters={3}
-            resultRenderer={resultRenderer}
-            onResultSelect={handleResultSelect}
-            label="Address"
-            type="text"
-            placeholder="Address"
-            fluid
-          />
-        </Form.Field>
+        <Autocomplete
+          {...register('address', {
+            required: true,
+          })}
+          freeSolo
+          onSearchChange={handleSearchChange}
+          options={results}
+          value={rawInput}
+          minCharacters={3}
+          resultRenderer={resultRenderer}
+          onResultSelect={handleResultSelect}
+          placeholder="Address"
+          renderInput={(params) => <Input {...params} label="Address" />}
+        />
+
         {/* CITY */}
-        <Form.Input
+        <Input
           label="city"
           type="text"
           placeholder="city"
@@ -155,7 +155,7 @@ const ContactForm = () => {
           })}
         />
         {/* STATE */}
-        <Form.Input
+        <Input
           label="State"
           type="text"
           placeholder="State"
@@ -164,7 +164,7 @@ const ContactForm = () => {
           })}
         />
         {/* ZIP CODE */}
-        <Form.Input
+        <Input
           label="Zip Code"
           type="number"
           placeholder="Zip Code"
@@ -173,8 +173,10 @@ const ContactForm = () => {
             pattern: /^\d{5}(?:[-\s]\d{4})?$/,
           })}
         />
-        <Button type="submit">Submit</Button>
-      </Form>
+        <Button variant="contained" endIcon={<IoArrowForward />}>
+          Send
+        </Button>
+      </form>
     </Container>
   );
 };

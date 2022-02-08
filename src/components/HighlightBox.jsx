@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import colors from './colors';
+import styled from '@emotion/styled';
 
 const HighlightBox = ({ text }) => {
   return <Container>{text}</Container>;
@@ -12,10 +11,10 @@ HighlightBox.propTypes = {
 };
 
 const Container = styled.div`
-  background-color: ${colors.accent2};
-  color: ${colors.white};
+  background-color: primary;
+  color: white;
   padding: 0.5rem;
-  border: 2px ${colors.primary} solid;
+  border: 2px primary solid;
   border-radius: 2px;
   font-family: 'Oswald', sans-serif;
 `;
