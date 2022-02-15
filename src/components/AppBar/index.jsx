@@ -45,3 +45,5 @@ const AppBar = () => {
 };
 
 export default AppBar;
+
+// TODO: NA: add responsive menu to appbar

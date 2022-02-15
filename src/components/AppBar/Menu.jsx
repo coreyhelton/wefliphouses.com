@@ -9,11 +9,11 @@ import theme from '../../Utilities/Theme';
 const Menu = () => {
   const [menu, setMenu] = useState(false);
   const toggleMenu = () => setMenu(!menu);
-  const iconColor = useMemo(() => ({ color: '#fff' }));
+  const iconStyling = useMemo(() => ({ color: '#fff' }));
 
   return (
     <ThemeProvider theme={theme}>
-      <IconContext.Provider value={iconColor}>
+      <IconContext.Provider value={iconStyling}>
         <Style>
           <div href="#" className="menu-open">
             <IoMenu onClick={toggleMenu} />
@@ -58,7 +58,7 @@ const Style = styled.div`
 
   .nav-menu {
     background-color: ${theme.palette.primary.main};
-    width: 200px;
+    width: 260px;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -67,6 +67,7 @@ const Style = styled.div`
     right: -100%;
     transition: 850ms;
     filter: drop-shadow(0 0 0.25rem black);
+    z-index: 1000;
   }
 
   .nav-menu.active {
@@ -78,7 +79,7 @@ const Style = styled.div`
     display: flex;
     justify-content: start;
     align-items: center;
-    padding: 8px 0px 8px 16px;
+    padding: 8px 0px 8px 0px;
     list-style: none;
     height: 60px;
   }
@@ -96,11 +97,12 @@ const Style = styled.div`
   }
 
   .nav-text a:hover {
-    background-color: #1a83ff;
+    background-color: #f7c548;
   }
 
   .nav-menu-items {
     width: 100%;
+    padding-left: 10px;
   }
 
   .navbar-toggle {
