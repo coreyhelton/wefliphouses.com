@@ -7,6 +7,8 @@ import {
   IoBulbOutline,
 } from 'react-icons/io5';
 
+import { HiMailOpen } from 'react-icons/hi';
+
 const MenuItems = [
   {
     title: 'Home',
@@ -36,6 +38,12 @@ const MenuItems = [
     title: 'Get an Offer',
     path: '/get-offer',
     icon: <IoCashOutline size="2.5rem" />,
+    cName: 'nav-text',
+  },
+  {
+    title: 'Contact Us',
+    path: '/contact',
+    icon: <HiMailOpen size="2.5rem" />,
     cName: 'nav-text',
   },
 ];
